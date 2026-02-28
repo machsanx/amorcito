@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Naydely 💖</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#f8cdda,#f7a1c4);
+    font-family:'Segoe UI', sans-serif;
+    overflow:hidden;
+}
+
+/* CONTENEDOR */
+.contenedor{
+    position:relative;
+    width:95%;
+    max-width:380px;
+    height:260px;
+    perspective:1500px;
+}
+
+/* SOBRE */
+.sobre{
+    position:relative;
+    width:100%;
+    height:100%;
+    transform-style:preserve-3d;
+    transition:transform 1.2s ease;
+    cursor:pointer;
+}
+
+/* BASE DEL SOBRE */
+.base{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#f06d8d;
+    border-radius:16px;
+    box-shadow:0 25px 50px rgba(0,0,0,0.3);
+}
+
+/* TAPA */
+.tapa{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#e85c82;
+    clip-path:polygon(0 0,50% 65%,100% 0);
+    transform-origin:top;
+    transition:transform 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+    border-radius:16px 16px 0 0;
+    backface-visibility:hidden;
+    z-index:3;
+}
+
+/* SOMBRA INTERIOR */
+.sombra{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:linear-gradient(to bottom,rgba(0,0,0,0.3),transparent);
+    border-radius:16px;
+    opacity:0;
+    transition:opacity 0.8s ease;
+    z-index:2;
+}
+
+/* CARTA */
+.carta{
+    position:absolute;
+    width:90%;
+    min-height:320px;
+    background:white;
+    top:5%;
+    left:5%;
+    border-radius:16px;
+    padding:20px;
+    box-sizing:border-box;
+    text-align:center;
+    transform:translateY(140%);
+    transition:transform 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+    z-index:1;
+    box-shadow:0 20px 40px rgba(0,0,0,0.25);
+}
+
+/* IMÁGENES */
+.img-arriba{
+    width:110px;
+    position:absolute;
+    top:-70px;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.lado-izq,.lado-der{
+    width:65px;
+    position:absolute;
+    top:95px;
+}
+
+.lado-izq{ left:-60px; }
+.lado-der{ right:-60px; }
+
+.img-abajo{
+    width:100px;
+    margin-top:15px;
+}
+
+/* TEXTO */
+.carta h2{
+    color:#e85c82;
+    margin-top:10px;
+}
+
+.carta p{
+    font-size:14px;
+    line-height:1.6;
+    color:#444;
+}
+
+/* ESTADO ABIERTO */
+.abierto .tapa{
+    transform:rotateX(-180deg);
+}
+
+.abierto .carta{
+    transform:translateY(-150px);
+}
+
+.abierto .sombra{
+    opacity:1;
+}
+
+/* CORAZÓN GRANDE */
+.corazon-grande{
+    position:fixed;
+    font-size:20px;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    opacity:0;
+}
+
+.animar-corazon{
+    animation:latidoGrande 1.6s ease forwards;
+}
+
+@keyframes latidoGrande{
+    0%{ transform:translate(-50%,-50%) scale(0); opacity:0; }
+    40%{ transform:translate(-50%,-50%) scale(9); opacity:1; }
+    100%{ transform:translate(-50%,-50%) scale(0); opacity:0; }
+}
+
+/* PÉTALOS */
+.petalo{
+    position:absolute;
+    top:-20px;
+    font-size:20px;
+    animation:caer linear forwards;
+}
+
+@keyframes caer{
+    to{
+        transform:translateY(110vh) rotate(720deg);
+        opacity:0;
+    }
+}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+    .carta{
+        min-height:300px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="contenedor" onclick="abrirCarta()" id="contenedor">
+    <div class="sobre">
+        <div class="base"></div>
+        <div class="sombra"></div>
+        <div class="tapa"></div>
+
+        <div class="carta" id="carta">
+            <img src="ambos.jpg" class="img-arriba">
+            <img src="rilakkuma.jpg" class="lado-izq">
+            <img src="korilakkuma.jpg" class="lado-der">
+
+            <h2>Feliz 17 Naydely 💖</h2>
+
+            <p>
+            Mi amor,<br><br>
+            Hoy cumple 17 añitos la persona que más amo en este mundo,
+            no sabes lo agradecido que estoy de tenerte en mi vida.
+            Gracias a ti he aprendido que el amor es hermoso,
+            me has enseñado a amar y aunque aún no soy perfecto,
+            créeme que me encanta tenerte en mi vida.<br><br>
+            Gracias por amarme y estar para siempre para mí,
+            te mando mil millones de abrazos y besitos mi niña.<br><br>
+            Prometo seguir cuidándote, apoyándote y amándote siempre.<br><br>
+            💕 Te amo infinitamente, mi princesa hermosa 💕
+            </p>
+
+            <img src="pusheen.jpg" class="img-abajo">
+        </div>
+    </div>
+</div>
+
+<div class="corazon-grande" id="corazonGrande">💖</div>
+<audio id="latido" src="https://www.soundjay.com/human/heartbeat-01a.mp3"></audio>
+
+<script>
+function abrirCarta(){
+    const contenedor=document.getElementById("contenedor");
+    const corazon=document.getElementById("corazonGrande");
+    const latido=document.getElementById("latido");
+
+    contenedor.classList.add("abierto");
+    latido.play();
+    corazon.classList.add("animar-corazon");
+
+    lanzarPetalos();
+}
+
+function lanzarPetalos(){
+    for(let i=0;i<30;i++){
+        setTimeout(()=>{
+            const petalo=document.createElement("div");
+            petalo.classList.add("petalo");
+            petalo.innerHTML="🌸";
+            petalo.style.left=Math.random()*100+"vw";
+            petalo.style.fontSize=(Math.random()*15+15)+"px";
+            petalo.style.animationDuration=(Math.random()*3+5)+"s";
+            document.body.appendChild(petalo);
+            setTimeout(()=>petalo.remove(),8000);
+        },i*100);
+    }
+}
+</script>
+
+</body>
+</html>
